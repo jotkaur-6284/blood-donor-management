@@ -1,0 +1,215 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+
+<style>
+.register-container {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+    box-sizing: border-box;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 350px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: whitesmoke;
+    color: #212121;
+    border: 1px solid #333;
+    box-sizing: border-box;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    color: #d30000;
+}
+
+.title::before,
+.title::after {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    left: 0;
+    background-color: #d30073;
+}
+
+.title::after {
+    animation: pulse 1s linear infinite;
+}
+
+.message,
+.signin {
+    font-size: 14.5px;
+    color: #333;
+}
+
+.signin {
+    text-align: center;
+}
+
+.signin a {
+    color: #d30000;
+}
+
+.signin a:hover {
+    text-decoration: underline green;
+}
+
+.flex {
+    display: flex;
+    width: 100%;
+    gap: 6px;
+}
+
+.form label {
+    position: relative;
+    width: 100%;
+}
+
+.form label .input {
+    background-color: #333;
+    color: #fff;
+    width: 100%;
+    padding: 20px 10px 5px;
+    outline: 0;
+    border: 1px solid rgba(105, 105, 105, 0.397);
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.form label .input + span {
+    color: rgba(255, 255, 255, 0.5);
+    position: absolute;
+    left: 10px;
+    top: 0;
+    font-size: 0.9em;
+    cursor: text;
+    transition: 0.3s ease;
+}
+
+.form label .input:placeholder-shown + span {
+    top: 12.5px;
+    font-size: 0.9em;
+}
+
+.form label .input:focus + span,
+.form label .input:valid + span {
+    color: #f8f2f5;
+    top: 0;
+    font-size: 0.7em;
+    font-weight: 600;
+}
+
+.input {
+    font-size: medium;
+}
+
+.submit {
+    border: none;
+    outline: none;
+    padding: 10px;
+    border-radius: 10px;
+    color: #d30000;
+    font-size: 16px;
+    background-color: whitesmoke;
+    border: 1px solid #d30000;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.submit:hover {
+    background-color: #d30023;
+    color: whitesmoke;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(0.9);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+    .register-container {
+        padding: 20px 12px;
+    }
+
+    .form {
+        padding: 18px;
+    }
+
+    .flex {
+        flex-direction: column;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+}
+</style>
+
+<div class="register-container">
+
+    <form class="form" method="POST">
+        {% csrf_token %}
+
+        <p class="title">Login</p>
+
+        <p class="message">
+            Join us in making a difference 🩸
+        </p>
+
+        <div class="flex">
+
+            <label>
+                <input required placeholder="" type="email" class="input" name="email">
+                <span>Email</span>
+            </label>
+
+        </div>    
+        <label>
+            <input required placeholder="" type="password" class="input" name="password">
+            <span>Password</span>
+        </label>
+
+        <button class="submit" type="submit">Submit</button>
+
+        <p class="signin">
+            Don't have an account? <a href="{% url 'register' %}">Register</a>
+        </p>
+{% if error %}
+<p style="color:red;">{{ error }}</p>
+{% endif %}
+
+{% if message %}
+<p style="color:green;">{{ message }}</p>
+{% endif %}
+    </form>
+
+</div>
+
+{% endblock %}
